@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 
+// MARK: - Constants
+
 fileprivate final class TextConstants {
     static let login = "Login"
     static let usernamePlaceholder = "keanureeves01"
@@ -65,7 +67,7 @@ fileprivate final class LayoutConstants {
 
 final class ViewController: UIViewController, UITextFieldDelegate {
 
-    // MARK: - Outlets
+    // MARK: - UI
 
     private lazy var backgroundTopVectorView: UIImageView = {
         let view = UIImageView();
@@ -253,6 +255,8 @@ final class ViewController: UIViewController, UITextFieldDelegate {
     // MARK: - Setup
 
     private func setupHierarchy() {
+        view.addSubview(backgroundBottomVectorView)
+        view.addSubview(backgroundTopVectorView)
         view.addSubview(mainStackView)
         let mainStackViews = [
             loginStackView,
@@ -340,10 +344,8 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         }
     }
 
-    private func setupViewStyle() {
+    private func setupView() {
         view.backgroundColor = .white
-        view.addSubview(backgroundBottomVectorView)
-        view.addSubview(backgroundTopVectorView)
     }
 
     private func setupLoginButtonGradient() {
@@ -384,7 +386,7 @@ final class ViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViewStyle()
+        setupView()
         setupHierarchy()
         setupLayout()
     }
