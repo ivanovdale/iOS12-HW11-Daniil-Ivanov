@@ -10,7 +10,7 @@ import SnapKit
 
 // MARK: - Constants
 
-fileprivate final class TextConstants {
+fileprivate enum TextConstants {
     static let login = "Login"
     static let usernamePlaceholder = "keanureeves01"
     static let passwordPlaceholder = "Password"
@@ -22,7 +22,7 @@ fileprivate final class TextConstants {
     static let signUp = "Sign up"
 }
 
-fileprivate final class StyleConstants {
+fileprivate enum StyleConstants {
     static let textFieldAttributes = [
         NSAttributedString.Key.foregroundColor: UIColor.lightGray,
         NSAttributedString.Key.font: UIFont.systemFont(ofSize: LayoutConstants.textFieldFontSize),
@@ -36,7 +36,7 @@ fileprivate final class StyleConstants {
     static let connectWithTwitterButtonColor = UIColor(red: 84 / 255, green: 113 / 255, blue: 179 / 255 , alpha: 1)
 }
 
-fileprivate final class LayoutConstants {
+fileprivate enum LayoutConstants {
     static let backgroundTopVectorMargin = UIEdgeInsets(top: 0, left: 0, bottom: 1.45, right: 0)
     static let backgroundBottomVectorMargin = UIEdgeInsets(top: 0, left: 0, bottom: 1.01, right: 0)
     static let mainStackMargin = UIEdgeInsets(top: 40, left: 0, bottom: 1.05, right: 0)
