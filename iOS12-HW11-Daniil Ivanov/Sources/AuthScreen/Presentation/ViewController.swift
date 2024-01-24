@@ -35,10 +35,12 @@ fileprivate final class StyleConstants {
 }
 
 fileprivate final class LayoutConstants {
-    static let mainStackMargin = UIEdgeInsets(top: 130, left: 0, bottom: 60, right: 0)
+    static let backgroundTopVectorMargin = UIEdgeInsets(top: 0, left: 0, bottom: 1.45, right: 0)
+    static let backgroundBottomVectorMargin = UIEdgeInsets(top: 0, left: 0, bottom: 1.01, right: 0)
+    static let mainStackMargin = UIEdgeInsets(top: 40, left: 0, bottom: 1.05, right: 0)
     static let loginStackMargin = UIEdgeInsets(top: 0, left: 44, bottom: 0, right: 44)
     static let loginLabelFontSize = 26.0
-    static let loginLabelPadding = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
+    static let loginLabelPadding = UIEdgeInsets(top: 0, left: 0, bottom: 0.05, right: 0)
     static let textFieldHeight = 55.0
     static let textFieldCornerRadius = textFieldHeight / 2
     static let textFieldFontSize = 12.0
@@ -297,21 +299,21 @@ final class ViewController: UIViewController, UITextFieldDelegate {
     private func setupLayout() {
         backgroundTopVectorView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
-            make.bottom.equalTo(view).dividedBy(1.45)
+            make.bottom.equalTo(view).dividedBy(LayoutConstants.backgroundTopVectorMargin.bottom)
         }
         backgroundBottomVectorView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
-            make.bottom.equalTo(backgroundTopVectorView.snp.bottom).offset(-10)
+            make.bottom.equalTo(backgroundTopVectorView.snp.bottom).dividedBy(LayoutConstants.backgroundBottomVectorMargin.bottom)
         }
         mainStackView.snp.makeConstraints { make in
-            make.top.equalTo(view).offset(LayoutConstants.mainStackMargin.top)
-            make.bottom.equalTo(view).offset(-LayoutConstants.mainStackMargin.bottom)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(LayoutConstants.mainStackMargin.top)
+            make.bottom.equalTo(view).dividedBy(LayoutConstants.mainStackMargin.bottom)
         }
         loginStackView.snp.makeConstraints { make in
             make.left.equalTo(view).offset(LayoutConstants.loginStackMargin.left)
             make.right.equalTo(view).offset(-LayoutConstants.loginStackMargin.right)
         }
-        loginStackView.setCustomSpacing(LayoutConstants.loginLabelPadding.bottom, after: loginLabel)
+        loginStackView.setCustomSpacing(view.frame.size.height * LayoutConstants.loginLabelPadding.bottom, after: loginLabel)
         usernameTextField.snp.makeConstraints { make in
             make.height.equalTo(LayoutConstants.textFieldHeight)
         }
