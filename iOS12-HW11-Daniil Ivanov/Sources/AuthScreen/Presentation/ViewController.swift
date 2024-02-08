@@ -67,33 +67,35 @@ fileprivate enum LayoutConstants {
 
 final class ViewController: UIViewController, UITextFieldDelegate {
 
-    // MARK: - UI
+    // MARK: - Outlets
 
     private lazy var backgroundTopVectorView: UIImageView = {
         let view = UIImageView();
-        let vector = UIImage(named:"Vector1");
+        let vector = UIImage(named: "Vector1");
         view.image = vector;
+
         return view
     }()
 
     private lazy var backgroundBottomVectorView: UIImageView = {
         let view = UIImageView();
-        let vector = UIImage(named:"Vector2");
+        let vector = UIImage(named: "Vector2");
         view.image = vector;
+
         return view
     }()
 
     private lazy var mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+
         return stackView
     }()
 
     private lazy var loginStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+
         return stackView
     }()
 
@@ -103,7 +105,7 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         label.textColor = .white
         label.textAlignment = .center
         label.font = StyleConstants.loginLabelFont
-        label.translatesAutoresizingMaskIntoConstraints = false
+
         return label
     }()
 
@@ -120,9 +122,10 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         textField.tag = 0
         textField.returnKeyType = .next
         textField.delegate = self
-        textField.translatesAutoresizingMaskIntoConstraints = false
+
         guard let leftIcon = UIImage(systemName: "person") else { return textField }
         textField.setLeftIcon(leftIcon, tintColor: .lightGray)
+
         return textField
     }()
 
@@ -140,9 +143,10 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         textField.tag = 1
         textField.returnKeyType = .done
         textField.delegate = self
-        textField.translatesAutoresizingMaskIntoConstraints = false
+
         guard let leftIcon = UIImage(systemName: "lock") else { return textField }
         textField.setLeftIcon(leftIcon, tintColor: .lightGray)
+
         return textField
     }()
 
@@ -151,14 +155,16 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         button.setTitle(TextConstants.login, for: .normal)
         button.layer.cornerRadius = LayoutConstants.loginButtonCornerRadius
         button.clipsToBounds = true
+
         setButtonShadow(for: button)
-        button.translatesAutoresizingMaskIntoConstraints = false
+
         return button
     }()
 
     private lazy var forgotPasswordButton: UIButton = {
         let button = UIButton()
         button.setTitle(TextConstants.forgotPasswordText, for: .normal)
+
         return button
     }()
 
@@ -167,14 +173,14 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         let spacerWidthConstraint = spacer.widthAnchor.constraint(equalToConstant: .greatestFiniteMagnitude)
         spacerWidthConstraint.priority = .defaultLow
         spacerWidthConstraint.isActive = true
-        spacer.translatesAutoresizingMaskIntoConstraints = false
+
         return spacer
     }()
 
     private lazy var connectWithStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+
         return stackView
     }()
 
@@ -184,6 +190,7 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         labeledSeparator.setColor(.lightGray)
         labeledSeparator.setHeight(LayoutConstants.dividerHeight)
         labeledSeparator.setLineWidth(LayoutConstants.dividerLineWidth)
+
         return labeledSeparator
     }()
 
@@ -191,7 +198,7 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
         stackView.spacing = LayoutConstants.connectWithButtonsSpacing
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+
         return stackView
     }()
 
@@ -202,12 +209,14 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         button.layer.cornerRadius = LayoutConstants.connectWithButtonCornerRadius
         button.clipsToBounds = true
         button.backgroundColor = StyleConstants.connectWithFacebookButtonColor
+
         guard let image = UIImage(named: "FacebookLogo") else { return button }
         button.setImage(image, for: .normal)
+
         setupButtonImageConstraints(for: button)
         setButtonHeight(for: button, height: LayoutConstants.connectWithButtonHeight)
         setButtonShadow(for: button)
-        button.translatesAutoresizingMaskIntoConstraints = false
+
         return button
     }()
 
@@ -218,12 +227,14 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         button.layer.cornerRadius = LayoutConstants.connectWithButtonCornerRadius
         button.clipsToBounds = true
         button.backgroundColor = StyleConstants.connectWithTwitterButtonColor
+
         guard let image = UIImage(named: "TwitterLogo") else { return button }
         button.setImage(image, for: .normal)
+
         setupButtonImageConstraints(for: button)
         setButtonHeight(for: button, height: LayoutConstants.connectWithButtonHeight)
         setButtonShadow(for: button)
-        button.translatesAutoresizingMaskIntoConstraints = false
+
         return button
     }()
 
@@ -231,6 +242,7 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         let stackView = UIStackView()
         stackView.alignment = .center
         stackView.spacing = LayoutConstants.signUpStackSpacing
+
         return stackView
     }()
 
@@ -241,6 +253,7 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         label.textColor = .lightGray
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         label.textAlignment = .right
+
         return label
     }()
 
@@ -249,15 +262,32 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         button.setTitle(TextConstants.signUp, for: .normal)
         button.setTitleColor(StyleConstants.connectWithTwitterButtonColor, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: LayoutConstants.signUpFontSize)
+
         return button
     }()
+
+    // MARK: - Lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupView()
+        setupHierarchy()
+        setupLayout()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        setupLoginButtonGradient()
+    }
 
     // MARK: - Setup
 
     private func setupHierarchy() {
-        view.addSubview(backgroundBottomVectorView)
-        view.addSubview(backgroundTopVectorView)
-        view.addSubview(mainStackView)
+        [
+            backgroundBottomVectorView,
+            backgroundTopVectorView,
+            mainStackView,
+        ].forEach { view.addSubview($0) }
+
         let mainStackViews = [
             loginStackView,
             spacer,
@@ -267,6 +297,7 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         mainStackViews.forEach {
             mainStackView.addArrangedSubview($0)
         }
+
         let loginStackViews = [
             loginLabel,
             usernameTextField,
@@ -277,6 +308,7 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         loginStackViews.forEach {
             loginStackView.addArrangedSubview($0)
         }
+
         let connectWithStackViews = [
             connectWithDivider,
             connectionOptionsStackView,
@@ -284,6 +316,7 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         connectWithStackViews.forEach {
             connectWithStackView.addArrangedSubview($0)
         }
+
         let connectionOptionsStackViews = [
             connectWithFacebookButton,
             connectWithTwitterButton,
@@ -291,6 +324,7 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         connectionOptionsStackViews.forEach {
             connectionOptionsStackView.addArrangedSubview($0)
         }
+
         let signUpStackViews = [
             dontHaveAccountLabel,
             signUpButton
@@ -301,41 +335,65 @@ final class ViewController: UIViewController, UITextFieldDelegate {
     }
 
     private func setupLayout() {
+
+        // MARK: Background
+
         backgroundTopVectorView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
-            make.bottom.equalTo(view).dividedBy(LayoutConstants.backgroundTopVectorMargin.bottom)
+            make.bottom.equalTo(view)
+                .dividedBy(LayoutConstants.backgroundTopVectorMargin.bottom)
         }
+
         backgroundBottomVectorView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
-            make.bottom.equalTo(backgroundTopVectorView.snp.bottom).dividedBy(LayoutConstants.backgroundBottomVectorMargin.bottom)
+            make.bottom.equalTo(backgroundTopVectorView.snp.bottom)
+                .dividedBy(LayoutConstants.backgroundBottomVectorMargin.bottom)
         }
+
+        // MARK: Main stack
+
         mainStackView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(LayoutConstants.mainStackMargin.top)
             make.bottom.equalTo(view).dividedBy(LayoutConstants.mainStackMargin.bottom)
         }
+
+        // MARK: Login stack
+
         loginStackView.snp.makeConstraints { make in
             make.left.equalTo(view).offset(LayoutConstants.loginStackMargin.left)
             make.right.equalTo(view).offset(-LayoutConstants.loginStackMargin.right)
         }
+
         loginStackView.setCustomSpacing(view.frame.size.height * LayoutConstants.loginLabelPadding.bottom, after: loginLabel)
+        loginStackView.setCustomSpacing(LayoutConstants.usernameTextFieldPadding.bottom, after: usernameTextField)
+        loginStackView.setCustomSpacing(LayoutConstants.passwordTextFieldPadding.bottom, after: passwordTextField)
+        loginStackView.setCustomSpacing(LayoutConstants.loginButtonPadding.bottom, after: loginButton)
+
+        // MARK: Login stack views
+
         usernameTextField.snp.makeConstraints { make in
             make.height.equalTo(LayoutConstants.textFieldHeight)
         }
-        loginStackView.setCustomSpacing(LayoutConstants.usernameTextFieldPadding.bottom, after: usernameTextField)
+
         passwordTextField.snp.makeConstraints { make in
             make.height.equalTo(LayoutConstants.textFieldHeight)
         }
-        loginStackView.setCustomSpacing(LayoutConstants.passwordTextFieldPadding.bottom, after: passwordTextField)
+
         loginButton.snp.makeConstraints { make in
             make.height.equalTo(LayoutConstants.loginButtonHeight)
         }
-        loginStackView.setCustomSpacing(LayoutConstants.loginButtonPadding.bottom, after: loginButton)
-        connectWithStackView.setCustomSpacing(LayoutConstants.connectWithDividerPadding.bottom, after: connectWithDivider)
+
+        // MARK: Connect with view
+
         connectWithStackView.snp.makeConstraints { make in
             make.left.equalTo(view).offset(LayoutConstants.connectWithStackMargin.left)
             make.right.equalTo(view).offset(-LayoutConstants.connectWithStackMargin.right)
             make.bottom.equalTo(signUpStackView.snp.top).offset(-LayoutConstants.connectWithStackMargin.bottom)
         }
+
+        connectWithStackView.setCustomSpacing(LayoutConstants.connectWithDividerPadding.bottom, after: connectWithDivider)
+
+        // MARK: Sign up stack
 
         // TODO: Не получается нормально отцентрировать. Нужна помощь
         signUpStackView.snp.makeConstraints { make in
@@ -380,19 +438,6 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         button.layer.shadowOpacity = 0.3
         button.layer.shadowRadius = 10
         button.layer.masksToBounds = false
-    }
-
-    // MARK: - Lifecycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupView()
-        setupHierarchy()
-        setupLayout()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        setupLoginButtonGradient()
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

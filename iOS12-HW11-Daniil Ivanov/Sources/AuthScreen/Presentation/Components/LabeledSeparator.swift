@@ -9,38 +9,49 @@ import UIKit
 import SnapKit
 
 class LabeledSeparator: UIStackView {
+
+    // MARK: - Outlets
+
     private let leftLineView: UIView = {
         let view = UIView()
         return view
     }()
+
     private let textLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         return label
     }()
+
     private let rightLineView: UIView = {
         let view = UIView()
         return view
     }()
 
+    // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupHierarchy()
         setupLayout()
-        setupViewStyle()
+        setupView()
     }
 
     required init(coder: NSCoder) {
         super.init(coder: coder)
+        setupView()
         setupHierarchy()
         setupLayout()
-        setupViewStyle()
     }
 
+    // MARK: - Setup
+
     private func setupHierarchy() {
-        addArrangedSubview(leftLineView)
-        addArrangedSubview(textLabel)
-        addArrangedSubview(rightLineView)
+        [
+            leftLineView,
+            textLabel,
+            rightLineView,
+        ].forEach { addArrangedSubview($0) }
     }
 
     private func setupLayout() {
@@ -50,17 +61,18 @@ class LabeledSeparator: UIStackView {
         }
     }
 
-    private func setupViewStyle() {
+    private func setupView() {
         axis = .horizontal
         alignment = .center
         distribution = .fillProportionally
         spacing = 10
-        translatesAutoresizingMaskIntoConstraints = false
     }
 
     func setText(_ text: String?) {
         textLabel.text = text
     }
+
+    // MARK: - Setters
 
     func setColor(_ color: UIColor) {
         leftLineView.backgroundColor = color
