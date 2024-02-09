@@ -86,6 +86,7 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         textField.tag = 1
         textField.returnKeyType = .done
         textField.delegate = self
+        textField.keyboardType = .asciiCapable
 
         guard let leftIcon = UIImage(systemName: "lock") else { return textField }
         textField.setLeftIcon(leftIcon, tintColor: .lightGray)
