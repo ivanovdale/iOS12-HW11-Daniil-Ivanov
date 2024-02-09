@@ -8,63 +8,6 @@
 import UIKit
 import SnapKit
 
-// MARK: - Constants
-
-fileprivate enum TextConstants {
-    static let login = "Login"
-    static let usernamePlaceholder = "keanureeves01"
-    static let passwordPlaceholder = "Password"
-    static let forgotPasswordText = "Forgot your password?"
-    static let connectWith = "or connect with"
-    static let facebook = "Facebook"
-    static let twitter = "Twitter"
-    static let dontHaveAccount = "Don't have account?"
-    static let signUp = "Sign up"
-}
-
-fileprivate enum StyleConstants {
-    static let textFieldAttributes = [
-        NSAttributedString.Key.foregroundColor: UIColor.lightGray,
-        NSAttributedString.Key.font: UIFont.systemFont(ofSize: LayoutConstants.textFieldFontSize),
-    ]
-    static let loginLabelFont = UIFont.systemFont(ofSize: LayoutConstants.loginLabelFontSize, weight: UIFont.Weight.bold)
-    static let loginButtonGradientColors = [
-        UIColor(red: 106 / 255, green: 123 / 255, blue: 213 / 255 , alpha: 1),
-        UIColor(red: 106 / 255, green: 115 / 255, blue: 205 / 255, alpha: 1),
-    ]
-    static let connectWithFacebookButtonColor = UIColor(red: 54 / 255, green: 164 / 255, blue: 239 / 255 , alpha: 1)
-    static let connectWithTwitterButtonColor = UIColor(red: 84 / 255, green: 113 / 255, blue: 179 / 255 , alpha: 1)
-}
-
-fileprivate enum LayoutConstants {
-    static let backgroundTopVectorBottomMargin = 1.45
-    static let backgroundBottomVectorBottomMargin = 1.01
-    static let mainStackMargin = UIEdgeInsets(top: 40, left: 0, bottom: 1.05, right: 0)
-    static let loginStackMargin = UIEdgeInsets(top: 0, left: 44, bottom: 0, right: 44)
-    static let loginLabelFontSize = 26.0
-    static let loginLabelBottomPadding = 0.05
-    static let textFieldHeight = 55.0
-    static let textFieldCornerRadius = textFieldHeight / 2
-    static let textFieldFontSize = 12.0
-    static let usernameTextFieldBottomPadding = 20.0
-    static let passwordTextFieldBottomPadding = 60.0
-    static let loginButtonHeight = textFieldHeight
-    static let loginButtonCornerRadius = textFieldCornerRadius
-    static let loginButtonBottomPadding = 24.0
-    static let dividerHeight = 1.0
-    static let dividerOffset = 5.0
-    static let connectWithDividerBottomOffset = 30.0
-    static let connectWithButtonHeight = 40.0
-    static let connectWithButtonCornerRadius = connectWithButtonHeight / 2
-    static let connectWithButtonFontSize = 14.0
-    static let connectWithIconSize = CGSize(width: connectWithButtonHeight / 2, height: connectWithButtonHeight / 2)
-    static let connectWithButtonsSpacing = 20.0
-    static let connectWithStackMargin = UIEdgeInsets(top: 0, left: 22, bottom: 50, right: 22)
-    static let signUpStackOffset = 50.0
-    static let signUpStackSpacing = 8.0
-    static let signUpFontSize = 14.0
-}
-
 final class ViewController: UIViewController, UITextFieldDelegate {
 
     // MARK: - Outlets
@@ -458,6 +401,60 @@ final class ViewController: UIViewController, UITextFieldDelegate {
     }
 }
 
-#Preview {
-    ViewController()
+// MARK: - Constants
+
+fileprivate enum TextConstants {
+    static let login = "Login"
+    static let usernamePlaceholder = "keanureeves01"
+    static let passwordPlaceholder = "Password"
+    static let forgotPasswordText = "Forgot your password?"
+    static let connectWith = "or connect with"
+    static let facebook = "Facebook"
+    static let twitter = "Twitter"
+    static let dontHaveAccount = "Don't have account?"
+    static let signUp = "Sign up"
 }
+
+fileprivate enum StyleConstants {
+    static let textFieldAttributes = [
+        NSAttributedString.Key.foregroundColor: UIColor.lightGray,
+        NSAttributedString.Key.font: UIFont.systemFont(ofSize: LayoutConstants.textFieldFontSize),
+    ]
+    static let loginLabelFont = UIFont.systemFont(ofSize: LayoutConstants.loginLabelFontSize, weight: UIFont.Weight.bold)
+    static let loginButtonGradientColors = [
+        UIColor(red: 106 / 255, green: 123 / 255, blue: 213 / 255 , alpha: 1),
+        UIColor(red: 106 / 255, green: 115 / 255, blue: 205 / 255, alpha: 1),
+    ]
+    static let connectWithFacebookButtonColor = UIColor(red: 54 / 255, green: 164 / 255, blue: 239 / 255 , alpha: 1)
+    static let connectWithTwitterButtonColor = UIColor(red: 84 / 255, green: 113 / 255, blue: 179 / 255 , alpha: 1)
+}
+
+fileprivate enum LayoutConstants {
+    static let backgroundTopVectorBottomMargin = 1.45
+    static let backgroundBottomVectorBottomMargin = 1.01
+    static let mainStackMargin = UIEdgeInsets(top: 40, left: 0, bottom: 1.05, right: 0)
+    static let loginStackMargin = UIEdgeInsets(top: 0, left: 44, bottom: 0, right: 44)
+    static let loginLabelFontSize = 26.0
+    static let loginLabelBottomPadding = 0.05
+    static let textFieldHeight = 55.0
+    static let textFieldCornerRadius = textFieldHeight / 2
+    static let textFieldFontSize = 12.0
+    static let usernameTextFieldBottomPadding = 20.0
+    static let passwordTextFieldBottomPadding = 60.0
+    static let loginButtonHeight = textFieldHeight
+    static let loginButtonCornerRadius = textFieldCornerRadius
+    static let loginButtonBottomPadding = 24.0
+    static let dividerHeight = 1.0
+    static let dividerOffset = 5.0
+    static let connectWithDividerBottomOffset = 30.0
+    static let connectWithButtonHeight = 40.0
+    static let connectWithButtonCornerRadius = connectWithButtonHeight / 2
+    static let connectWithButtonFontSize = 14.0
+    static let connectWithIconSize = CGSize(width: connectWithButtonHeight / 2, height: connectWithButtonHeight / 2)
+    static let connectWithButtonsSpacing = 20.0
+    static let connectWithStackMargin = UIEdgeInsets(top: 0, left: 22, bottom: 50, right: 22)
+    static let signUpStackOffset = 50.0
+    static let signUpStackSpacing = 8.0
+    static let signUpFontSize = 14.0
+}
+
