@@ -9,83 +9,83 @@ import UIKit
 import SnapKit
 
 class LabeledSeparator: UIStackView {
+
+    // MARK: - Outlets
+
     private let leftLineView: UIView = {
         let view = UIView()
         return view
     }()
+
     private let textLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         return label
     }()
+
     private let rightLineView: UIView = {
         let view = UIView()
         return view
     }()
 
+    // MARK: - Init
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupHierarchy()
         setupLayout()
-        setupViewStyle()
+        setupView()
     }
 
     required init(coder: NSCoder) {
         super.init(coder: coder)
+        setupView()
         setupHierarchy()
         setupLayout()
-        setupViewStyle()
     }
 
+    // MARK: - Setup
+
     private func setupHierarchy() {
-        addArrangedSubview(leftLineView)
-        addArrangedSubview(textLabel)
-        addArrangedSubview(rightLineView)
+        [
+            leftLineView,
+            textLabel,
+            rightLineView,
+        ].forEach { addArrangedSubview($0) }
     }
 
     private func setupLayout() {
+
+        leftLineView.snp.makeConstraints { make in
+            make.height.equalTo(1)
+        }
+
+        rightLineView.snp.makeConstraints { make in
+            make.height.equalTo(1)
+        }
+
         textLabel.snp.makeConstraints { make in
-            make.leading.equalTo(leftLineView.snp.trailing)
-            make.trailing.equalTo(rightLineView.snp.leading)
+            make.leading.equalTo(leftLineView.snp.trailing).offset(10)
+            make.trailing.equalTo(rightLineView.snp.leading).offset(-10)
         }
     }
 
-    private func setupViewStyle() {
+    private func setupView() {
         axis = .horizontal
         alignment = .center
-        distribution = .fillProportionally
-        spacing = 10
-        translatesAutoresizingMaskIntoConstraints = false
+        distribution = .equalCentering
     }
 
     func setText(_ text: String?) {
         textLabel.text = text
     }
 
+    // MARK: - Setters
+
     func setColor(_ color: UIColor) {
         leftLineView.backgroundColor = color
         rightLineView.backgroundColor = color
         textLabel.textColor = color
-    }
-
-    func setHeight(_ height: CGFloat) {
-        leftLineView.snp.makeConstraints { make in
-            make.height.equalTo(height)
-        }
-        rightLineView.snp.makeConstraints { make in
-            make.height.equalTo(height)
-        }
-    }
-    
-    // TODO: Возможно ли не задавать ширину линий сепаратора?
-    // Хочу, чтобы сами растягивались в стеке.
-    func setLineWidth(_ width: CGFloat) {
-        leftLineView.snp.makeConstraints { make in
-            make.width.equalTo(width)
-        }
-        rightLineView.snp.makeConstraints { make in
-            make.width.equalTo(width)
-        }
     }
 }
 

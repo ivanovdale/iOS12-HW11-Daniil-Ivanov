@@ -13,6 +13,7 @@
 		003A8F7E2B5EAEA2008449C3 /* UITextField+SetLeftIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003A8F7D2B5EAEA2008449C3 /* UITextField+SetLeftIcon.swift */; };
 		003A8F812B5EB094008449C3 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 003A8F802B5EB094008449C3 /* SnapKit */; };
 		0066620C2B6032C1006B3951 /* LabeledSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0066620B2B6032C1006B3951 /* LabeledSeparator.swift */; };
+		007C07002B763AFB000BF046 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007C06FF2B763AFB000BF046 /* UIImage+Extensions.swift */; };
 		00DE4F122B5FCB8400AA5942 /* UIView+ApplyGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DE4F112B5FCB8400AA5942 /* UIView+ApplyGradient.swift */; };
 /* End PBXBuildFile section */
 
@@ -24,6 +25,7 @@
 		003A8F732B5D632B008449C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		003A8F7D2B5EAEA2008449C3 /* UITextField+SetLeftIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+SetLeftIcon.swift"; sourceTree = "<group>"; };
 		0066620B2B6032C1006B3951 /* LabeledSeparator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabeledSeparator.swift; sourceTree = "<group>"; };
+		007C06FF2B763AFB000BF046 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		00DE4F112B5FCB8400AA5942 /* UIView+ApplyGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ApplyGradient.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -137,6 +139,7 @@
 			children = (
 				003A8F7D2B5EAEA2008449C3 /* UITextField+SetLeftIcon.swift */,
 				00DE4F112B5FCB8400AA5942 /* UIView+ApplyGradient.swift */,
+				007C06FF2B763AFB000BF046 /* UIImage+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -219,6 +222,7 @@
 				003A8F6A2B5D6329008449C3 /* ViewController.swift in Sources */,
 				0066620C2B6032C1006B3951 /* LabeledSeparator.swift in Sources */,
 				003A8F662B5D6329008449C3 /* AppDelegate.swift in Sources */,
+				007C07002B763AFB000BF046 /* UIImage+Extensions.swift in Sources */,
 				00DE4F122B5FCB8400AA5942 /* UIView+ApplyGradient.swift in Sources */,
 				003A8F7E2B5EAEA2008449C3 /* UITextField+SetLeftIcon.swift in Sources */,
 			);
@@ -359,7 +363,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -390,7 +394,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
