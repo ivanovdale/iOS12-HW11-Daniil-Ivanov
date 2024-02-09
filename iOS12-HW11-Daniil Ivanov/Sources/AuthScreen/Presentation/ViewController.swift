@@ -37,30 +37,30 @@ fileprivate enum StyleConstants {
 }
 
 fileprivate enum LayoutConstants {
-    static let backgroundTopVectorMargin = UIEdgeInsets(top: 0, left: 0, bottom: 1.45, right: 0)
-    static let backgroundBottomVectorMargin = UIEdgeInsets(top: 0, left: 0, bottom: 1.01, right: 0)
+    static let backgroundTopVectorBottomMargin = 1.45
+    static let backgroundBottomVectorBottomMargin = 1.01
     static let mainStackMargin = UIEdgeInsets(top: 40, left: 0, bottom: 1.05, right: 0)
     static let loginStackMargin = UIEdgeInsets(top: 0, left: 44, bottom: 0, right: 44)
     static let loginLabelFontSize = 26.0
-    static let loginLabelPadding = UIEdgeInsets(top: 0, left: 0, bottom: 0.05, right: 0)
+    static let loginLabelBottomPadding = 0.05
     static let textFieldHeight = 55.0
     static let textFieldCornerRadius = textFieldHeight / 2
     static let textFieldFontSize = 12.0
-    static let usernameTextFieldPadding = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
-    static let passwordTextFieldPadding = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
+    static let usernameTextFieldBottomPadding = 20.0
+    static let passwordTextFieldBottomPadding = 60.0
     static let loginButtonHeight = textFieldHeight
     static let loginButtonCornerRadius = textFieldCornerRadius
-    static let loginButtonPadding = UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0)
+    static let loginButtonBottomPadding = 24.0
     static let dividerHeight = 1.0
-    static let dividerLineWidth = 100.0
-    static let connectWithDividerPadding = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
+    static let dividerOffset = 5.0
+    static let connectWithDividerBottomOffset = 30.0
     static let connectWithButtonHeight = 40.0
     static let connectWithButtonCornerRadius = connectWithButtonHeight / 2
     static let connectWithButtonFontSize = 14.0
     static let connectWithIconSize = CGSize(width: connectWithButtonHeight / 2, height: connectWithButtonHeight / 2)
     static let connectWithButtonsSpacing = 20.0
     static let connectWithStackMargin = UIEdgeInsets(top: 0, left: 22, bottom: 50, right: 22)
-    static let signUpStackMargin = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 60)
+    static let signUpStackOffset = 50.0
     static let signUpStackSpacing = 8.0
     static let signUpFontSize = 14.0
 }
@@ -151,8 +151,9 @@ final class ViewController: UIViewController, UITextFieldDelegate {
     }()
 
     private lazy var loginButton: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.setTitle(TextConstants.login, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = LayoutConstants.loginButtonCornerRadius
         button.clipsToBounds = true
 
@@ -188,8 +189,6 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         let labeledSeparator = LabeledSeparator()
         labeledSeparator.setText(TextConstants.connectWith)
         labeledSeparator.setColor(.lightGray)
-        labeledSeparator.setHeight(LayoutConstants.dividerHeight)
-        labeledSeparator.setLineWidth(LayoutConstants.dividerLineWidth)
 
         return labeledSeparator
     }()
@@ -206,15 +205,19 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         let button = UIButton()
         button.setTitle(TextConstants.facebook, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: LayoutConstants.connectWithButtonFontSize)
+        button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = LayoutConstants.connectWithButtonCornerRadius
         button.clipsToBounds = true
         button.backgroundColor = StyleConstants.connectWithFacebookButtonColor
 
-        guard let image = UIImage(named: "FacebookLogo") else { return button }
+        guard let image = UIImage(named: "FacebookLogo")?
+            .resized(targetSize: LayoutConstants.connectWithIconSize) else { return button }
         button.setImage(image, for: .normal)
 
-        setupButtonImageConstraints(for: button)
-        setButtonHeight(for: button, height: LayoutConstants.connectWithButtonHeight)
+        var configuration = UIButton.Configuration.plain()
+        configuration.imagePadding = LayoutConstants.connectWithIconSize.height / 2
+        button.configuration = configuration
+
         setButtonShadow(for: button)
 
         return button
@@ -224,15 +227,19 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         let button = UIButton()
         button.setTitle(TextConstants.twitter, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: LayoutConstants.connectWithButtonFontSize)
+        button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = LayoutConstants.connectWithButtonCornerRadius
         button.clipsToBounds = true
         button.backgroundColor = StyleConstants.connectWithTwitterButtonColor
 
-        guard let image = UIImage(named: "TwitterLogo") else { return button }
+        guard let image = UIImage(named: "TwitterLogo")?
+            .resized(targetSize: LayoutConstants.connectWithIconSize) else { return button }
         button.setImage(image, for: .normal)
 
-        setupButtonImageConstraints(for: button)
-        setButtonHeight(for: button, height: LayoutConstants.connectWithButtonHeight)
+        var configuration = UIButton.Configuration.plain()
+        configuration.imagePadding = LayoutConstants.connectWithIconSize.height / 2
+        button.configuration = configuration
+
         setButtonShadow(for: button)
 
         return button
@@ -241,6 +248,7 @@ final class ViewController: UIViewController, UITextFieldDelegate {
     private lazy var signUpStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.alignment = .center
+        stackView.distribution = .fillProportionally
         stackView.spacing = LayoutConstants.signUpStackSpacing
 
         return stackView
@@ -251,7 +259,6 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         label.text = TextConstants.dontHaveAccount
         label.font = UIFont.systemFont(ofSize: LayoutConstants.signUpFontSize)
         label.textColor = .lightGray
-        label.setContentCompressionResistancePriority(.required, for: .horizontal)
         label.textAlignment = .right
 
         return label
@@ -262,6 +269,7 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         button.setTitle(TextConstants.signUp, for: .normal)
         button.setTitleColor(StyleConstants.connectWithTwitterButtonColor, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: LayoutConstants.signUpFontSize)
+        button.contentHorizontalAlignment = .left
 
         return button
     }()
@@ -341,13 +349,13 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         backgroundTopVectorView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
             make.bottom.equalTo(view)
-                .dividedBy(LayoutConstants.backgroundTopVectorMargin.bottom)
+                .dividedBy(LayoutConstants.backgroundTopVectorBottomMargin)
         }
 
         backgroundBottomVectorView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.bottom.equalTo(backgroundTopVectorView.snp.bottom)
-                .dividedBy(LayoutConstants.backgroundBottomVectorMargin.bottom)
+                .dividedBy(LayoutConstants.backgroundBottomVectorBottomMargin)
         }
 
         // MARK: Main stack
@@ -359,15 +367,25 @@ final class ViewController: UIViewController, UITextFieldDelegate {
 
         // MARK: Login stack
 
-        loginStackView.snp.makeConstraints { make in
-            make.left.equalTo(view).offset(LayoutConstants.loginStackMargin.left)
-            make.right.equalTo(view).offset(-LayoutConstants.loginStackMargin.right)
-        }
+        loginStackView.setCustomSpacing(
+            view.frame.size.height * LayoutConstants.loginLabelBottomPadding,
+            after: loginLabel
+        )
 
-        loginStackView.setCustomSpacing(view.frame.size.height * LayoutConstants.loginLabelPadding.bottom, after: loginLabel)
-        loginStackView.setCustomSpacing(LayoutConstants.usernameTextFieldPadding.bottom, after: usernameTextField)
-        loginStackView.setCustomSpacing(LayoutConstants.passwordTextFieldPadding.bottom, after: passwordTextField)
-        loginStackView.setCustomSpacing(LayoutConstants.loginButtonPadding.bottom, after: loginButton)
+        loginStackView.setCustomSpacing(
+            LayoutConstants.usernameTextFieldBottomPadding,
+            after: usernameTextField
+        )
+
+        loginStackView.setCustomSpacing(
+            LayoutConstants.passwordTextFieldBottomPadding,
+            after: passwordTextField
+        )
+
+        loginStackView.setCustomSpacing(
+            LayoutConstants.loginButtonBottomPadding,
+            after: loginButton
+        )
 
         // MARK: Login stack views
 
@@ -386,19 +404,25 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         // MARK: Connect with view
 
         connectWithStackView.snp.makeConstraints { make in
-            make.left.equalTo(view).offset(LayoutConstants.connectWithStackMargin.left)
-            make.right.equalTo(view).offset(-LayoutConstants.connectWithStackMargin.right)
-            make.bottom.equalTo(signUpStackView.snp.top).offset(-LayoutConstants.connectWithStackMargin.bottom)
+            make.left.equalTo(view).inset(LayoutConstants.connectWithStackMargin.left)
+            make.right.equalTo(view).inset(LayoutConstants.connectWithStackMargin.right)
         }
 
-        connectWithStackView.setCustomSpacing(LayoutConstants.connectWithDividerPadding.bottom, after: connectWithDivider)
+        mainStackView.setCustomSpacing(LayoutConstants.connectWithStackMargin.bottom, after: connectWithStackView)
+
+        connectWithStackView.setCustomSpacing(
+            LayoutConstants.connectWithDividerBottomOffset,
+            after: connectWithDivider
+        )
 
         // MARK: Sign up stack
 
-        // TODO: Не получается нормально отцентрировать. Нужна помощь
-        signUpStackView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.right.equalToSuperview().offset(-LayoutConstants.signUpStackMargin.right)
+        connectWithFacebookButton.snp.makeConstraints { make in
+            make.height.equalTo(LayoutConstants.connectWithButtonHeight)
+        }
+
+        connectWithTwitterButton.snp.makeConstraints { make in
+            make.height.equalTo(LayoutConstants.connectWithButtonHeight)
         }
     }
 
@@ -412,23 +436,6 @@ final class ViewController: UIViewController, UITextFieldDelegate {
             locations: [0.0, 1.0],
             cornerRadius: LayoutConstants.loginButtonCornerRadius
         )
-    }
-
-    private func setupButtonImageConstraints(for button: UIButton) {
-        button.imageView?.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(LayoutConstants.connectWithButtonHeight / 2)
-            make.top.equalToSuperview().offset(LayoutConstants.connectWithButtonHeight / 4)
-            if let titleLabel = button.titleLabel {
-                make.right.equalTo(titleLabel.snp.left).offset(-LayoutConstants.connectWithButtonHeight / 2)
-            }
-            make.size.equalTo(LayoutConstants.connectWithIconSize)
-        }
-    }
-
-    private func setButtonHeight(for button: UIButton, height: ConstraintRelatableTarget) {
-        button.snp.makeConstraints { make in
-            make.height.equalTo(height)
-        }
     }
 
     // TODO: Почему-то у loginButton тень не работает...
@@ -451,3 +458,6 @@ final class ViewController: UIViewController, UITextFieldDelegate {
     }
 }
 
+#Preview {
+    ViewController()
+}

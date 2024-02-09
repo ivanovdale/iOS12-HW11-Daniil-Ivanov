@@ -55,17 +55,25 @@ class LabeledSeparator: UIStackView {
     }
 
     private func setupLayout() {
+
+        leftLineView.snp.makeConstraints { make in
+            make.height.equalTo(1)
+        }
+
+        rightLineView.snp.makeConstraints { make in
+            make.height.equalTo(1)
+        }
+
         textLabel.snp.makeConstraints { make in
-            make.leading.equalTo(leftLineView.snp.trailing)
-            make.trailing.equalTo(rightLineView.snp.leading)
+            make.leading.equalTo(leftLineView.snp.trailing).offset(10)
+            make.trailing.equalTo(rightLineView.snp.leading).offset(-10)
         }
     }
 
     private func setupView() {
         axis = .horizontal
         alignment = .center
-        distribution = .fillProportionally
-        spacing = 10
+        distribution = .equalCentering
     }
 
     func setText(_ text: String?) {
@@ -78,26 +86,6 @@ class LabeledSeparator: UIStackView {
         leftLineView.backgroundColor = color
         rightLineView.backgroundColor = color
         textLabel.textColor = color
-    }
-
-    func setHeight(_ height: CGFloat) {
-        leftLineView.snp.makeConstraints { make in
-            make.height.equalTo(height)
-        }
-        rightLineView.snp.makeConstraints { make in
-            make.height.equalTo(height)
-        }
-    }
-    
-    // TODO: Возможно ли не задавать ширину линий сепаратора?
-    // Хочу, чтобы сами растягивались в стеке.
-    func setLineWidth(_ width: CGFloat) {
-        leftLineView.snp.makeConstraints { make in
-            make.width.equalTo(width)
-        }
-        rightLineView.snp.makeConstraints { make in
-            make.width.equalTo(width)
-        }
     }
 }
 
