@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class ViewController: UIViewController, UITextFieldDelegate {
+final class ViewController: UIViewController {
 
     // MARK: - Outlets
 
@@ -382,7 +382,6 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         )
     }
 
-    // TODO: Почему-то у loginButton тень не работает...
     private func setButtonShadow(for button: UIButton) {
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOffset = .zero
@@ -390,7 +389,11 @@ final class ViewController: UIViewController, UITextFieldDelegate {
         button.layer.shadowRadius = 10
         button.layer.masksToBounds = false
     }
+}
 
+// MARK: - Extensions
+
+extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let nextTag = textField.tag + 1
         if let nextResponder = textField.superview?.viewWithTag(nextTag) {
